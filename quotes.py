@@ -65,7 +65,7 @@ def get_authors():
 def get_authors_links(url):
     page = requests.get(url)
     tree = html.fromstring(page.text)
-    arr = tree.xpath('//table[@class="table table-hover table-bordered sticky_adzone"]//td/a/@href')
+    arr = tree.xpath('//table[@class="table table-hover table-bordered"]//td/a/@href')
     return arr
 
 def fetch_quote(url):
@@ -74,10 +74,10 @@ def fetch_quote(url):
     quotes = tree.find_class('bqQt')
     tempString = ""
     for q in quotes:
-        tempString += ("\"%s\","%next(q.find_class('bqQuoteLink')[0].iter('a')).text)
+        tempString += ("\"%s\","%next(q.find_class('b-qt')[0].iter('a')).text)
         tempString += ("%s,"%next(q.find_class('bq-aut')[0].iter('a')).text)
-        for element in q.find_class('bqBlackLink')[0].iter('a'):
-            tempString += "%s;"%element.text
+        for element in q.find_class('oncl_k'):
+            tempString += "%s "%element.text
         tempString += "\n"
     return tempString
 
